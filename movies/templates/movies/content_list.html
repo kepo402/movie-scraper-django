@@ -1,0 +1,24 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}{{ content_type|title }} List{% endblock %}
+
+{% block content %}
+    <h1>{{ content_type|title }} List</h1>
+    <div class="content-grid">
+        {% for content in contents %}
+            <div class="content-item">
+                <a href="{% url 'content_detail' content.id %}">
+                    {% if content.poster_url %}
+                        <img src="{{ content.poster_url }}" alt="{{ content.title }}" class="content-poster">
+                    {% endif %}
+                    <h2>{{ content.title }}</h2>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+
+
+

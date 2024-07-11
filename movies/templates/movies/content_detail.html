@@ -1,0 +1,15 @@
+<!-- movies/templates/movies/content_detail.html -->
+
+{% extends 'movies/base.html' %}
+
+{% block title %}{{ content.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ content.title }}</h1>
+    {% if content.poster_url %}
+        <img src="{{ content.poster_url }}" alt="{{ content.title }}">
+    {% endif %}
+    <p>{{ content.details }}</p>
+    <a href="{{ content.download_link }}" target="_blank">Download</a>
+{% endblock %}
+
