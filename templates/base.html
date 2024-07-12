@@ -176,10 +176,12 @@
         {% block content %}
         <!-- Default content block, can be overridden by child templates -->
         {% endblock %}
+        {% block extra_styles %}
+        {% endblock %}
     </main>
 
     <footer>
-        <p>&copy; {% block footer_year %}2024{% endblock %} My Movie Site</p>
+        <p>&copy; {% block footer_year %}2024{% endblock %} Yinmo </p>
         <div class="footer-links">
             <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
             <a href="{% url 'terms_of_service' %}">Terms of Service</a>
