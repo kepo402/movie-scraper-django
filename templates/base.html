@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Movie Site{% endblock %}</title>
+    <style>
+        /* Your CSS styles */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #1c1c1c;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ff9800;
+        }
+        main {
+            padding: 40px 20px;
+            flex: 1; /* Makes main content take up remaining space */
+        }
+        footer {
+            background-color: #1c1c1c;
+            color: #bbb;
+            text-align: center;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        footer p, footer a {
+            margin: 5px 0;
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #ff9800;
+        }
+        footer .social-icons {
+            margin-top: 10px;
+        }
+        footer .social-icons a {
+            margin: 0 10px;
+            color: #bbb;
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+        footer .social-icons a:hover {
+            color: #ff9800;
+        }
+        footer .footer-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        footer .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer .footer-links a:hover {
+            color: #ff9800;
+        }
+        /* Grid Layout Styles */
+        .content-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .content-item {
+            background: #1c1c1c;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 10px;
+            width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s, background-color 0.3s;
+            text-align: center;
+        }
+
+        .content-item:hover {
+            transform: scale(1.05);
+            background-color: #282828;
+        }
+
+        .content-poster {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .content-item h2 {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: #ff9800;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* Search bar styles */
+        .search-bar {
+            margin-left: 30px;
+        }
+        .search-bar input[type="text"] {
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            width: 200px;
+        }
+        .search-bar button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff9800;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-bar button:hover {
+            background-color: #e68900;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'movie_list' %}">Home</a></li>
+                <li><a href="{% url 'movie_list' %}">Movies</a></li>
+                <li><a href="{% url 'series_list' %}">Series</a></li>
+                <li class="search-bar">
+                    <form action="{% url 'search' %}" method="get">
+                        <input type="text" name="query" placeholder="Search...">
+                        <button type="submit">Search</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Default content block, can be overridden by child templates -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; {% block footer_year %}2024{% endblock %} My Movie Site</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="{% url 'terms_of_service' %}">Terms of Service</a>
+            <a href="#">Contact U</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://twitter.com" target="_blank">&#x1F426;</a> <!-- Twitter Icon -->
+            <a href="https://facebook.com" target="_blank">&#x1F465;</a> <!-- Facebook Icon -->
+            <a href="https://instagram.com" target="_blank">&#x1F47E;</a> <!-- Instagram Icon -->
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
+
+

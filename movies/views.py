@@ -19,6 +19,20 @@ def content_detail(request, content_id):  # Ensure the parameter name matches th
     content = get_object_or_404(Content, id=content_id)
     return render(request, 'movies/content_detail.html', {'content': content})
 
+def terms_of_service(request):
+    return render(request, 'movies/terms_of_service.html')
+
+def search(request):
+    query = request.GET.get('query', '')
+    movie_results = Content.objects.filter(type='movie', title__icontains=query)
+    series_results = Content.objects.filter(type='series', title__icontains=query)
+    context = {
+        'query': query,
+        'movie_results': movie_results,
+        'series_results': series_results,
+    }
+    return render(request, 'movies/search_results.html', context)
+
 
 def home(request):
     return redirect('movie_list')
