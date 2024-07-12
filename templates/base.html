@@ -181,9 +181,9 @@
     <footer>
         <p>&copy; {% block footer_year %}2024{% endblock %} My Movie Site</p>
         <div class="footer-links">
-            <a href="#">Privacy Policy</a>
+            <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
             <a href="{% url 'terms_of_service' %}">Terms of Service</a>
-            <a href="#">Contact U</a>
+            <a href="{% url 'contact_us' %}">Contact Us</a>
         </div>
         <div class="social-icons">
             <a href="https://twitter.com" target="_blank">&#x1F426;</a> <!-- Twitter Icon -->

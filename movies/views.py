@@ -34,6 +34,13 @@ def search(request):
     return render(request, 'movies/search_results.html', context)
 
 
+def privacy_policy(request):
+    return render(request, 'movies/privacy_policy.html')
+
+def contact_us(request):
+    return render(request, 'movies/contact_us.html')
+
+
 def home(request):
     return redirect('movie_list')
 
