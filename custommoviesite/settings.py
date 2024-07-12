@@ -26,7 +26,15 @@ SECRET_KEY = 'django-insecure-owp@-9e4dt_s$_*@53t9(ii!*a&hu2yq(9db43a6oo8=4-tx&2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost', 
+    '127.0.0.1', 
+    'movie-scraper-django.onrender.com',  
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://movie-scraper-django.onrender.com', 
+]
 
 
 # Application definition
