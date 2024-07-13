@@ -29,11 +29,13 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1', 
-    'movie-scraper-django.onrender.com',  
+    'movie-scraper-django.onrender.com',
+    'ac6a-102-89-33-138.ngrok-free.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://movie-scraper-django.onrender.com', 
+    'https://ac6a-102-89-33-138.ngrok-free.app'
 ]
 
 

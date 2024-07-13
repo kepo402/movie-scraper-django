@@ -1,17 +1,22 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Content
 from django.shortcuts import redirect
+from django.core.paginator import Paginator
 
 
 def home_redirect(request):
     return redirect('content_list', content_type='movie')
 
 def content_list(request, content_type):
-    # Assuming 'type' is a field in your Content model
     contents = Content.objects.filter(type=content_type)
+    
+    paginator = Paginator(contents, 12)  # Show 12 contents per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     context = {
         'content_type': content_type,
-        'contents': contents,
+        'page_obj': page_obj,  # Replace 'contents' with 'page_obj'
     }
     return render(request, 'movies/content_list.html', context)
 
