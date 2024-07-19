@@ -48,4 +48,3 @@ def contact_us(request):
 
 def home(request):
     return redirect('movie_list')
-
