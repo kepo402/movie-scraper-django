@@ -16,6 +16,9 @@
             Download Subtitle
         </button>
     {% endif %}
+    <p class="download-note">
+        Note: If clicking the download button does not start the download immediately and instead redirects you to another page, please return to this download page and click the download button again.
+    </p>
 {% endblock %}
 
 {% block extra_styles %}
@@ -35,8 +38,15 @@
     .download-button:hover, .subtitle-button:hover {
         background-color: #0056b3;
     }
+    .download-note {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #ff0000;
+    }
 </style>
 {% endblock %}
+
+
 
 
 
