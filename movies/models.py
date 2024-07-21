@@ -9,7 +9,7 @@ class Content(models.Model):
     ]
 
     title = models.CharField(max_length=200)
-    download_link = models.URLField(max_length=300)
+    download_link = models.URLField(max_length=1500)
     type = models.CharField(max_length=50, choices=TYPE_CHOICES)
     details = models.TextField(null=True, blank=True)
     poster_url = models.URLField(max_length=300, null=True, blank=True)
