@@ -48,10 +48,15 @@ def search(request):
     query = request.GET.get('query', '')
     movie_results = Content.objects.filter(type='movie', title__icontains=query)
     series_results = Content.objects.filter(type='series', title__icontains=query)
+    music_results = Content.objects.filter(type='music', title__icontains=query)
+    nollywood_results = Content.objects.filter(type='nollywood', title__icontains=query)
     context = {
         'query': query,
         'movie_results': movie_results,
         'series_results': series_results,
+        'music_results': music_results,
+        'nollywood_results': nollywood_results,
+
     }
     return render(request, 'movies/search_results.html', context)
 
