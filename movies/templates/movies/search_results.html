@@ -39,6 +39,24 @@
                 {% endfor %}
             </div>
         {% endif %}
+
+        {% if music_results or nollywood_results %}
+        {% if music_results %}
+            <h2>Music</h2>
+            <div class="content-grid">
+                {% for content in music_results %}
+                    <div class="content-item">
+                        <a href="{% url 'content_detail' content.id %}">
+                            {% if content.poster_url %}
+                                <img src="{{ content.poster_url }}" alt="{{ content.title }}" class="content-poster">
+                            {% endif %}
+                            <h2>{{ content.title }}</h2>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
     {% else %}
         <p>No results found for "{{ query }}".</p>
     {% endif %}
