@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,47 +21,30 @@
         header {
             background-color: #1c1c1c;
             color: #fff;
-            padding: 20px 0;
+            padding: 10px 20px;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Add this CSS in your existing <style> section or in your CSS file */
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.pagination .step-links {
-    display: flex;
-    gap: 10px;
-}
-
-.pagination a {
-    color: #ff9800;
-    text-decoration: none;
-    padding: 5px 10px;
-    border: 1px solid #ff9800;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.pagination a:hover {
-    background-color: #ff9800;
-    color: #fff;
-}
-
-.pagination .current {
-    padding: 5px 10px;
-    border: 1px solid #ff9800;
-    border-radius: 5px;
-    background-color: #ff9800;
-    color: #fff;
-}
-
-
+        .logo {
+            font-size: 2em;
+            font-weight: 700;
+            color: #ff9800;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo:hover {
+            color: #e68900;
+        }
 
         nav {
             position: relative;
@@ -106,7 +91,7 @@
         .search-bar button:hover {
             background-color: #e68900;
         }
-        /* Responsive styles */
+
         .menu-toggle {
             display: none;
             position: absolute;
@@ -179,15 +164,10 @@
             gap: 20px;
             margin-top: 10px;
         }
-        footer .footer-links a {
-            color: #bbb;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
         footer .footer-links a:hover {
             color: #ff9800;
         }
-        /* Grid Layout Styles */
+
         .content-grid {
             display: flex;
             flex-wrap: wrap;
@@ -227,11 +207,47 @@
             text-decoration: none;
             color: inherit;
         }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination .step-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pagination a {
+            color: #ff9800;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ff9800;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: #ff9800;
+            color: #fff;
+        }
+
+        .pagination .current {
+            padding: 5px 10px;
+            border: 1px solid #ff9800;
+            border-radius: 5px;
+            background-color: #ff9800;
+            color: #fff;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
+        <a href="{% url 'movie_list' %}" class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Yinmo Logo" style="height: 40px;">Yinmo
+        </a>
         <nav>
             <div class="menu-toggle" onclick="toggleMenu()">
                 <div></div>
@@ -283,3 +299,4 @@
     </script>
 </body>
 </html>
+
