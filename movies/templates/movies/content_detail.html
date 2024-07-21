@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load rating_tags %}
 
 {% block title %}{{ content.title }}{% endblock %}
 
@@ -19,6 +20,32 @@
     <p class="download-note">
         Note: If clicking the download button does not start the download immediately and instead redirects you to another page, please return to this download page and click the download button again.
     </p>
+
+    <!-- Review Section -->
+    <div class="review-section">
+        <h2>Reviews</h2>
+    
+        {% if reviews %}
+            {% for review in reviews %}
+                <div class="review">
+                    <p><strong>{{ review.user_name }}:</strong> {{ review.comment }}</p>
+                    <div class="stars">
+                        {% render_stars review.rating %}
+                    </div>
+                    <p class="review-date">{{ review.created_at|date:"M d, Y H:i" }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No reviews yet. Be the first to review!</p>
+        {% endif %}
+    
+        <!-- Review Form -->
+        <form method="post" action="{% url 'content_detail' content.id %}" class="review-form">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Render form fields as paragraphs -->
+            <button type="submit" class="submit-review-button">Submit Review</button>
+        </form>
+    </div>
 {% endblock %}
 
 {% block extra_styles %}
@@ -43,17 +70,49 @@
         font-size: 14px;
         color: #ff0000;
     }
+    .review-section {
+        margin-top: 40px;
+    }
+    .review {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+    }
+    .stars {
+        display: flex;
+        font-size: 1.5em;
+    }
+    .star {
+        color: #ccc; /* Default color for empty stars */
+        cursor: pointer;
+    }
+    .star.filled {
+        color: #FFD700; /* Color for filled stars */
+    }
+    .star-label {
+        display: inline-block;
+        cursor: pointer;
+    }
+    .review-form {
+        margin-top: 20px;
+    }
+    .review-form div {
+        margin-bottom: 10px;
+    }
+    .submit-review-button {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .submit-review-button:hover {
+        background-color: #218838;
+    }
+    .review-date {
+        font-size: 12px;
+        color: #888;
+    }
 </style>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-

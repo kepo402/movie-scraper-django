@@ -1,17 +1,11 @@
-# movies/forms.py
 from django import forms
-from .models import Content
-from .validators import CustomURLValidator
+from .models import Review
 
-class ContentForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Content
-        fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Apply custom URL validator
-        self.fields['download_link'].validators.append(CustomURLValidator())
-
-
+        model = Review
+        fields = ['user_name', 'comment', 'rating']
+        widgets = {
+            'rating': forms.RadioSelect(choices=[(i, str(i)) for i in range(1, 6)])
+        }
 

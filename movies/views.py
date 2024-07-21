@@ -1,8 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Content
-from django.shortcuts import redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
-
+from .models import Content, Review
+from .forms import ReviewForm
 
 def home_redirect(request):
     return redirect('content_list', content_type='movie')
@@ -16,13 +15,31 @@ def content_list(request, content_type):
     
     context = {
         'content_type': content_type,
-        'page_obj': page_obj,  # Replace 'contents' with 'page_obj'
+        'page_obj': page_obj,
     }
     return render(request, 'movies/content_list.html', context)
 
-def content_detail(request, content_id):  # Ensure the parameter name matches the URL pattern
+def content_detail(request, content_id):
     content = get_object_or_404(Content, id=content_id)
-    return render(request, 'movies/content_detail.html', {'content': content})
+    reviews = Review.objects.filter(content=content)
+    
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.content = content
+            review.save()
+            return redirect('content_detail', content_id=content.id)
+    else:
+        form = ReviewForm()
+    
+    context = {
+        'content': content,
+        'reviews': reviews,
+        'form': form,
+    }
+    return render(request, 'movies/content_detail.html', context)
+
 
 def terms_of_service(request):
     return render(request, 'movies/terms_of_service.html')
@@ -38,13 +55,11 @@ def search(request):
     }
     return render(request, 'movies/search_results.html', context)
 
-
 def privacy_policy(request):
     return render(request, 'movies/privacy_policy.html')
 
 def contact_us(request):
     return render(request, 'movies/contact_us.html')
 
-
 def home(request):
-    return redirect('movie_list')
+    return redirect('content_list', content_type='movie')
