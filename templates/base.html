@@ -156,6 +156,7 @@
             
             .menu-toggle {
                 display: block; /* Show on mobile devices */
+                top: 0px; /* Adjust for smaller devices */
             }
             
             nav ul li {
@@ -286,6 +287,40 @@
             border-radius: 5px;
             background-color: #ff9800;
             color: #fff;
+        }
+
+        @media (max-width: 500px) {
+        .menu-toggle {
+            top: 0px; /* Adjust for smaller devices */
+            right: 10px; /* Adjust for smaller devices */
+        }
+
+        .menu-toggle div{
+            width:30px;
+            margin: 6px 0;
+        }
+
+        .search-bar {
+            margin-top: 50px; /* Add more spacing */
+        }
+
+        .search-bar input[type="text"] {
+            width: calc(100% - 20px); /* Full width minus padding */
+        }
+
+        nav ul {
+                flex-direction: column;
+                align-items: center;
+                display: none; /* Hidden by default */
+                width: 100%; /* Full width */
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                right: 600px;
+                background-color: #1c1c1c; /* Match header background */
+                padding: 10px 0; /* Add padding to avoid content sticking to edges */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
+                
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
