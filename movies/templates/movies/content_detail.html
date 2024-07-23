@@ -9,7 +9,7 @@
         <img src="{{ content.poster_url }}" alt="{{ content.title }}" style="max-width: 100%; height: 500px;">
     {% endif %}
     <p>{{ content.details }}</p>
-    <button class="download-button" onclick="window.location.href='{{ content.download_link }}'">
+    <button class="download-button" onclick="window.location.href='{% url 'download_content' content_id=content.id %}'">
         Download
     </button>
     {% if content.subtitle_url %}

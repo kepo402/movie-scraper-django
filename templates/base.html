@@ -358,6 +358,7 @@
         {% endblock %}
         {% block extra_styles %}
         {% endblock %}
+        
     </main>
 
     <footer>
@@ -379,6 +380,8 @@
             document.querySelector('nav').classList.toggle('active');
         }
     </script>
+     {% block extra_scripts %}
+     <!-- Additional scripts can be included here by child templates -->
+     {% endblock %}
 </body>
 </html>
-

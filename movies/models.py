@@ -1,6 +1,7 @@
-# models.py
 import requests
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
 
 def get_new_download_link(url):
     headers = {
@@ -37,21 +38,30 @@ class Content(models.Model):
     ]
 
     title = models.CharField(max_length=200)
-    download_link = models.URLField(max_length=1500)
+    permanent_download_link = models.URLField(max_length=1500)  # Original, unchanging URL
+    current_download_link = models.URLField(max_length=1500, blank=True, null=True)  # Temporary URL
     type = models.CharField(max_length=50, choices=TYPE_CHOICES)
     details = models.TextField(null=True, blank=True)
     poster_url = models.URLField(max_length=300, null=True, blank=True)
     subtitle_url = models.URLField(max_length=300, null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        if self.download_link:
-            new_download_link = get_new_download_link(self.download_link)
+    def update_download_link(self):
+        if self.permanent_download_link:
+            new_download_link = get_new_download_link(self.permanent_download_link)
             if new_download_link:
-                self.download_link = new_download_link
-        super().save(*args, **kwargs)
+                self.current_download_link = new_download_link
+                self.save(update_fields=['current_download_link'])
+                return self.current_download_link
+        return None
+
+    def revert_to_permanent_link(self):
+        if self.permanent_download_link:
+            self.current_download_link = self.permanent_download_link
+            self.save(update_fields=['current_download_link'])
 
     def __str__(self):
         return self.title
+
 
 class Review(models.Model):
     RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]  # Choices for star ratings (1-5)
@@ -64,15 +74,6 @@ class Review(models.Model):
 
     def __str__(self):
         return f'Review by {self.user_name} on {self.content.title}'
-
-
-
-
-
-
-
-
-
 
 
 

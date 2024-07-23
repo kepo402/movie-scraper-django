@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from .models import Content, Review
 from .forms import ReviewForm
+from django.http import HttpResponseRedirect
 
 def home_redirect(request):
     return redirect('content_list', content_type='movie')
@@ -68,3 +69,35 @@ def contact_us(request):
 
 def home(request):
     return redirect('content_list', content_type='movie')
+
+
+def download_content(request, content_id):
+    content = get_object_or_404(Content, id=content_id)
+
+    # Update to temporary download link
+    new_download_link = content.update_download_link()
+
+    if new_download_link:
+        return HttpResponseRedirect(new_download_link)
+    else:
+        return HttpResponseRedirect('/error-page')  # Redirect to an error page or a different page
+    
+
+def finalize_download(request, content_id):
+    content = get_object_or_404(Content, id=content_id)
+
+    # Revert to the permanent link after download attempt
+    content.revert_to_permanent_link()
+    
+    return HttpResponseRedirect('/thank-you')  # Redirect to a thank-you page or elsewhere
+
+
+def finalize_download(request, content_id):
+    content = get_object_or_404(Content, id=content_id)
+
+    # Revert to the permanent link after download attempt or as needed
+    content.revert_to_permanent_link()
+    
+    # Redirect to a thank-you page or elsewhere
+    return HttpResponseRedirect('/thank-you')
+
