@@ -81,6 +81,10 @@ class Content(models.Model):
             if new_download_link:
                 self.current_download_link = new_download_link
                 self.save(update_fields=['current_download_link'])
+                # Move current download link to permanent download link only for header set 2
+                if self.requires_special_headers_2:
+                    self.permanent_download_link = new_download_link
+                    self.save(update_fields=['permanent_download_link'])
                 return self.current_download_link
         return None
 
