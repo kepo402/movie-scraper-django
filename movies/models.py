@@ -1,5 +1,6 @@
 from django.db import models
 import requests
+from bs4 import BeautifulSoup
 
 def get_new_download_link(url, requires_special_headers_1=False, requires_special_headers_2=False):
     # Define headers for special cases
@@ -52,6 +53,60 @@ def get_new_download_link(url, requires_special_headers_1=False, requires_specia
             return response.url
     return None
 
+def scrape_content(url, content_type, requires_special_headers_1=False):
+    headers_special_1 = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'Accept-Encoding': 'gzip, deflate, br, zstd',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Cache-Control': 'max-age=0',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Origin': 'https://www.lulacloud.com',
+        'Referer': url,
+        'Sec-Ch-Ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+        'Sec-Ch-Ua-Mobile': '?0',
+        'Sec-Ch-Ua-Platform': '"Windows"',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'same-origin',
+        'Upgrade-Insecure-Requests': '1',
+    }
+
+    if requires_special_headers_1:
+        response = requests.get(url, headers=headers_special_1)
+    else:
+        response = requests.get(url)
+
+    if response.status_code != 200:
+        print(f"Failed to retrieve the page. Status code: {response.status_code}")
+        return []
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Adjust selectors based on content type
+    content_selectors = {
+        'movie': 'div.movie-reel a',        # Example selector for movies
+        'series': 'div.series-reel a',      # Example selector for series
+    }
+
+    selector = content_selectors.get(content_type, 'div.movie-reel a')
+
+    content_items = []
+    for item in soup.select(selector):
+        link = item.get('href')
+        img_tag = item.find('img')
+        img_src = img_tag['src'] if img_tag else None
+        img_alt = img_tag['alt'] if img_tag else None
+        title = img_alt if img_alt else "Unknown Title"
+
+        content_items.append({
+            'title': title,
+            'link': link,
+            'img_src': img_src
+        })
+    
+    return content_items
+
 class Content(models.Model):
     TYPE_CHOICES = [
         ('movie', 'Movie'),
@@ -68,7 +123,7 @@ class Content(models.Model):
     poster_url = models.URLField(max_length=300, null=True, blank=True)
     subtitle_url = models.URLField(max_length=300, null=True, blank=True)
 
-    requires_special_headers_1 = models.BooleanField(default=False)  # Header set 1
+    requires_special_headers_1 = models.BooleanField(default=True)  # Header set 1
     requires_special_headers_2 = models.BooleanField(default=False)  # Header set 2
 
     def update_download_link(self):

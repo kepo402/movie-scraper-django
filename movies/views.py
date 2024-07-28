@@ -101,3 +101,5 @@ def finalize_download(request, content_id):
     # Redirect to a thank-you page or elsewhere
     return HttpResponseRedirect('/thank-you')
 
+
+
