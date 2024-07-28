@@ -190,8 +190,22 @@ def save_content_to_db(content_items):
 if __name__ == "__main__":
     urls = [
         ("https://www.awafim.tv/browse?type=movie", 'movie'),
+        ("https://www.awafim.tv/browse/page/2?type=movie", 'movie'),
+        ("https://www.awafim.tv/browse/page/3?type=movie", 'movie'),
+        ("https://www.awafim.tv/browse/page/4?type=movie", 'movie'),
+        ("https://www.awafim.tv/browse/page/5?type=movie", 'movie'),
+        ("https://www.awafim.tv/browse/page/282?type=movie", 'movie'),
         ("https://www.awafim.tv/browse?q=&type=movie&country%5B%5D=NGA", 'nollywood'),
-        ("https://www.awafim.tv/browse?type=series", 'series')
+        ("https://www.awafim.tv/browse/page/2?type=movie&country%5B0%5D=NGA", 'nollywood'),
+        ("https://www.awafim.tv/browse/page/3?type=movie&country%5B0%5D=NGA", 'nollywood'),
+        ("https://www.awafim.tv/browse/page/4?type=movie&country%5B0%5D=NGA", 'nollywood'),
+        ("https://www.awafim.tv/browse/page/5?type=movie&country%5B0%5D=NGA", 'nollywood'),
+        ("https://www.awafim.tv/browse/page/6?type=movie&country%5B0%5D=NGA", 'nollywood'),
+        ("https://www.awafim.tv/browse?type=series", 'series'),
+        ("https://www.awafim.tv/browse/page/103?type=series", 'series'),
+        ("https://www.awafim.tv/browse/page/2?type=series", 'series'),
+        ("https://www.awafim.tv/browse/page/3?type=series", 'series'),
+        ("https://www.awafim.tv/browse/page/4?type=series", 'series'),
     ]
 
     all_items = []

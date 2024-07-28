@@ -123,8 +123,15 @@ class Content(models.Model):
     poster_url = models.URLField(max_length=300, null=True, blank=True)
     subtitle_url = models.URLField(max_length=300, null=True, blank=True)
 
-    requires_special_headers_1 = models.BooleanField(default=True)  # Header set 1
+    requires_special_headers_1 = models.BooleanField(default=False)  # Header set 1
     requires_special_headers_2 = models.BooleanField(default=False)  # Header set 2
+
+    def save(self, *args, **kwargs):
+        if self.type in ['movie', 'series', 'nollywood']:
+            self.requires_special_headers_1 = True
+        else:
+            self.requires_special_headers_1 = False
+        super().save(*args, **kwargs)
 
     def update_download_link(self):
         if self.permanent_download_link:
@@ -162,3 +169,4 @@ class Review(models.Model):
 
     def __str__(self):
         return f'Review by {self.user_name} on {self.content.title}'
+
