@@ -32,7 +32,6 @@ ALLOWED_HOSTS = [
     'movie-scraper-django.onrender.com',
     'bf08-102-88-33-179.ngrok-free.app',
     'yinmovie-nvxij5qe3-olayinkas-projects-8dfff35b.vercel.app',
-
 ]
 
 CSRF_TRUSTED_ORIGINS = [
