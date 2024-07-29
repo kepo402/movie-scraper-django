@@ -136,6 +136,55 @@
             transition: all 0.3s;
         }
 
+        .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 40px; /* Add space below pagination */
+}
+
+.pagination .step-links {
+    display: flex;
+    gap: 10px;
+}
+
+.pagination a {
+    color: #ff9800;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #ff9800;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #ff9800;
+    color: #fff;
+}
+
+.pagination .current {
+    padding: 8px 12px;
+    border: 1px solid #ff9800;
+    border-radius: 5px;
+    background-color: #ff9800;
+    color: #fff;
+}
+
+.pagination .disabled {
+    padding: 8px 12px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: #555;
+    cursor: not-allowed;
+}
+
+.pagination .dots {
+    padding: 8px 12px;
+    color: #ff9800;
+    font-weight: bold;
+}
+
+
         @media (max-width: 768px) {
             nav ul {
                 flex-direction: column;

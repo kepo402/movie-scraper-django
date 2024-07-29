@@ -9,14 +9,27 @@ def home_redirect(request):
 
 def content_list(request, content_type):
     contents = Content.objects.filter(type=content_type)
-    
     paginator = Paginator(contents, 12)  # Show 12 contents per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
+
+    # Calculate page numbers to show
+    current_page = page_obj.number
+    total_pages = page_obj.paginator.num_pages
+    pages_to_show = list(range(max(current_page - 1, 1), min(current_page + 2, total_pages + 1)))
+    if pages_to_show[0] > 1:
+        if pages_to_show[0] > 2:
+            pages_to_show.insert(0, '...')
+        pages_to_show.insert(0, 1)
+    if pages_to_show[-1] < total_pages:
+        if pages_to_show[-1] < total_pages - 1:
+            pages_to_show.append('...')
+        pages_to_show.append(total_pages)
+
     context = {
         'content_type': content_type,
         'page_obj': page_obj,
+        'pages_to_show': pages_to_show,
     }
     return render(request, 'movies/content_list.html', context)
 
