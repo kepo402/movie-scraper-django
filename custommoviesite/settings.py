@@ -36,7 +36,6 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://movie-scraper-django.onrender.com', 
     'https://yinmovie.vercel.app',
     'https://yinmovie-nvxij5qe3-olayinkas-projects-8dfff35b.vercel.app',
 ]
