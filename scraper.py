@@ -215,21 +215,3 @@ if __name__ == "__main__":
 
     save_content_to_db(all_items)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
