@@ -31,14 +31,14 @@ ALLOWED_HOSTS = [
     '127.0.0.1', 
     'movie-scraper-django.onrender.com',
     'bf08-102-88-33-179.ngrok-free.app',
-    'yinmovie-ey2wfq0ap-olayinkas-projects-8dfff35b.vercel.app',
+    'yinmovie-nvxij5qe3-olayinkas-projects-8dfff35b.vercel.app',
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://movie-scraper-django.onrender.com', 
     'https://bf08-102-88-33-179.ngrok-free.app',
-    'https://yinmovie-ey2wfq0ap-olayinkas-projects-8dfff35b.vercel.app',
+    'https://yinmovie-nvxij5qe3-olayinkas-projects-8dfff35b.vercel.app',
 ]
 
 

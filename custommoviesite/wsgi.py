@@ -13,5 +13,5 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'custommoviesite.settings')
 
 application = get_wsgi_application()
-app = application
+app = application  # This line ensures compatibility with Vercel
 
