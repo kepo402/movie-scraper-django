@@ -213,96 +213,101 @@
         }
 
         @media (max-width: 500px) {
-            .pagination {
-                flex-direction: column;
-                margin-top: 15px;
-                margin-bottom: 30px; /* Adjust margin for smaller screens */
-            }
+    .pagination {
+        flex-direction: column;
+        margin-top: 15px;
+        margin-bottom: 30px; /* Adjust margin for smaller screens */
+    }
 
-            .pagination .step-links {
-                flex-direction: column;
-                align-items: center;
-            }
+    .pagination .step-links {
+        flex-direction: column;
+        align-items: center;
+    }
 
-            .pagination a {
-                padding: 10px 15px; /* Increase padding for better touch targets */
-                font-size: 0.9em; /* Adjust font size for better readability */
-            }
+    .pagination a {
+        padding: 10px 15px; /* Increase padding for better touch targets */
+        font-size: 0.9em; /* Adjust font size for better readability */
+    }
 
-            .pagination .current {
-                padding: 10px 15px; /* Increase padding for better touch targets */
-                font-size: 0.9em; /* Adjust font size for better readability */
-            }
+    .pagination .current {
+        padding: 10px 15px; /* Increase padding for better touch targets */
+        font-size: 0.9em; /* Adjust font size for better readability */
+    }
 
-            .pagination .dots {
-                padding: 10px 15px; /* Increase padding for better touch targets */
-                font-size: 0.9em; /* Adjust font size for better readability */
-            }
+    .pagination .dots {
+        padding: 10px 15px; /* Increase padding for better touch targets */
+        font-size: 0.9em; /* Adjust font size for better readability */
+    }
 
-            .menu-toggle {
-                top: 0; /* Adjust if necessary */
-                right: 10px; /* Adjust if necessary */
-            }
+    .menu-toggle {
+        top: 0; /* Adjust if necessary */
+        right: 10px; /* Adjust if necessary */
+    }
 
-            .menu-toggle div {
-                width: 30px; /* Adjust for better visibility */
-                margin: 6px 0;
-            }
+    .menu-toggle div {
+        width: 30px; /* Adjust for better visibility */
+        margin: 6px 0;
+    }
 
-            .search-bar {
-                margin-top: 50px; /* Add more spacing from the menu */
-                width: calc(100% - 20px); /* Full width minus padding */
-                box-sizing: border-box; /* Include padding in width calculation */
-                display: flex; /* Use flexbox for alignment */
-                justify-content: center; /* Center horizontally */
-            }
+    .search-bar {
+        position: fixed; /* Keep the search bar fixed at the bottom */
+        bottom: 0;
+        width: 100%; /* Full width */
+        padding: 10px; /* Space around the search bar */
+        background: #1c1c1c; /* Match header background */
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Shadow for better visibility */
+        display: flex; /* Use flexbox for alignment */
+        justify-content: center; /* Center horizontally */
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
 
-            .search-bar form {
-                display: flex;
-                flex-direction: column; /* Stack input and button vertically */
-                align-items: center; /* Center align items horizontally */
-                gap: 10px; /* Space between input and button */
-                width: 100%; /* Full width of the .search-bar container */
-                max-width: 400px; /* Optional: Limit width for better appearance */
-            }
+    .search-bar form {
+        display: flex;
+        flex-direction: column; /* Stack input and button vertically */
+        align-items: center; /* Center align items horizontally */
+        gap: 10px; /* Space between input and button */
+        width: 100%; /* Full width of the .search-bar container */
+        max-width: 400px; /* Limit width for better appearance */
+    }
 
-            .search-bar input[type="text"] {
-                width: 100%; /* Full width of the form */
-                padding: 10px; /* Adjust padding if needed */
-            }
+    .search-bar input[type="text"] {
+        width: 100%; /* Full width of the form */
+        padding: 10px; /* Adjust padding if needed */
+    }
 
-            .search-bar button {
-                width: 100%; /* Full width of the form */
-                padding: 10px; /* Adjust padding if needed */
-                background-color: #ff9800;
-                color: #fff;
-                cursor: pointer;
-                border: none;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
+    .search-bar button {
+        width: 20%; /* Full width of the form */
+        padding: 10px; /* Adjust padding if needed */
+        background-color: #ff9800;
+        color: #fff;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
 
-            .search-bar button:hover {
-                background-color: #e68900;
-            }
+    .search-bar button:hover {
+        background-color: #e68900;
+    }
 
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-                display: none; /* Hidden by default */
-                width: 100%; /* Full width */
-                position: absolute;
-                top: 60px; /* Adjust based on header height */
-                left: 0;
-                background-color: #1c1c1c; /* Match header background */
-                padding: 10px 0; /* Add padding to avoid content sticking to edges */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
-            }
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        display: none; /* Hidden by default */
+        width: 100%; /* Full width */
+        position: absolute;
+        top: 60px; /* Adjust based on header height */
+        left: 0;
+        background-color: #1c1c1c; /* Match header background */
+        padding: 10px 0; /* Add padding to avoid content sticking to edges */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
+    }
 
-            nav.active ul {
-                display: flex; /* Show menu when active */
-            }
-        }
+    nav.active ul {
+        display: flex; /* Show menu when active */
+    }
+}
+
 
         main {
             padding: 40px 20px;
