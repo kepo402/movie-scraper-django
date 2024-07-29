@@ -23,11 +23,14 @@ from movies.views import home_redirect
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+app_name = 'movies'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', content_list, {'content_type': 'movie'}, name='movie_list'),
-    path('movies/', include('movies.urls')),
-    path('series/', include('movies.urls')),
+    
+    path('movies/', include('movies.urls', namespace='movies')),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 if settings.DEBUG:

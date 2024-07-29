@@ -9,7 +9,7 @@
         <img src="{{ content.poster_url }}" alt="{{ content.title }}" style="max-width: 100%; height: 500px;">
     {% endif %}
     <p>{{ content.details }}</p>
-    <button class="download-button" onclick="window.location.href='{% url 'download_content' content_id=content.id %}'">
+    <button class="download-button" onclick="window.location.href='{% url 'movies:download_content' content_id=content.id %}'">
         Download
     </button>
     {% if content.subtitle_url %}
@@ -40,7 +40,7 @@
         {% endif %}
     
         <!-- Review Form -->
-        <form method="post" action="{% url 'content_detail' content.id %}" class="review-form">
+        <form method="post" action="{% url 'movies:content_detail' content.id %}" class="review-form">
             {% csrf_token %}
             {{ form.as_p }} <!-- Render form fields as paragraphs -->
             <button type="submit" class="submit-review-button">Submit Review</button>

@@ -30,7 +30,7 @@ def content_detail(request, content_id):
             review = form.save(commit=False)
             review.content = content
             review.save()
-            return redirect('content_detail', content_id=content.id)
+            return redirect('movies:content_detail', content_id=content.id)
     else:
         form = ReviewForm()
     

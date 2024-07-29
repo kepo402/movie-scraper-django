@@ -361,7 +361,7 @@
 </head>
 <body>
     <header>
-        <a href="{% url 'movie_list' %}" class="logo">
+        <a href="{% url 'movies:movie_list' %}" class="logo">
             <img src="{% static 'images/logo.png' %}" alt="Yinmo Logo" style="height: 40px;">Yinmovie
         </a>
         <nav>
@@ -371,13 +371,13 @@
                 <div></div>
             </div>
             <ul>
-                <li><a href="{% url 'movie_list' %}">Home</a></li>
-                <li><a href="{% url 'movie_list' %}">Movies</a></li>
-                <li><a href="{% url 'series_list' %}">Series</a></li>
-                <li><a href="{% url 'nollywood_list' %}">Nollywood</a></li>
-                <li><a href="{% url 'music_list' %}">Music</a></li>
+                <li><a href="{% url 'movies:movie_list' %}">Home</a></li>
+                <li><a href="{% url 'movies:movie_list' %}">Movies</a></li>
+                <li><a href="{% url 'movies:series_list' %}">Series</a></li>
+                <li><a href="{% url 'movies:nollywood_list' %}">Nollywood</a></li>
+                <li><a href="{% url 'movies:music_list' %}">Music</a></li>
                 <li class="search-bar">
-                    <form action="{% url 'search' %}" method="get">
+                    <form action="{% url 'movies:search' %}" method="get">
                         <input type="text" name="query" placeholder="Search...">
                         <button type="submit">Search</button>
                     </form>
@@ -398,9 +398,9 @@
     <footer>
         <p>&copy; {% block footer_year %}2024{% endblock %} Yinmo </p>
         <div class="footer-links">
-            <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
-            <a href="{% url 'terms_of_service' %}">Terms of Service</a>
-            <a href="{% url 'contact_us' %}">Contact Us</a>
+            <a href="{% url 'movies:privacy_policy' %}">Privacy Policy</a>
+            <a href="{% url 'movies:terms_of_service' %}">Terms of Service</a>
+            <a href="{% url 'movies:contact_us' %}">Contact Us</a>
         </div>
         <div class="social-icons">
             <a href="https://twitter.com/yinmovie" target="_blank">&#x1F426;</a> <!-- Twitter Icon -->

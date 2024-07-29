@@ -7,7 +7,7 @@
     <div class="content-grid">
         {% for content in page_obj %}
             <div class="content-item">
-                <a href="{% url 'content_detail' content.id %}">
+                <a href="{% url 'movies:content_detail' content.id %}">
                     {% if content.poster_url %}
                         <img src="{{ content.poster_url }}" alt="{{ content.title }}" class="content-poster">
                     {% endif %}
