@@ -1,6 +1,8 @@
 from django.db import models
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
+
 
 def get_new_download_link(url, requires_special_headers_1=False, requires_special_headers_2=False):
     # Define headers for special cases
@@ -122,6 +124,7 @@ class Content(models.Model):
     details = models.TextField(null=True, blank=True)
     poster_url = models.URLField(max_length=300, null=True, blank=True)
     subtitle_url = models.URLField(max_length=300, null=True, blank=True)
+    date_added = models.DateTimeField(auto_now_add=True)  # Set auto_now_add to True for auto-populating
 
     requires_special_headers_1 = models.BooleanField(default=False)  # Header set 1
     requires_special_headers_2 = models.BooleanField(default=False)  # Header set 2
@@ -169,4 +172,3 @@ class Review(models.Model):
 
     def __str__(self):
         return f'Review by {self.user_name} on {self.content.title}'
-

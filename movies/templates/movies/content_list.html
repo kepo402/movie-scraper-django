@@ -26,7 +26,7 @@
                 <span class="disabled">&laquo; First</span>
                 <span class="disabled">Previous</span>
             {% endif %}
-    
+
             {% for num in pages_to_show %}
                 {% if num == '...' %}
                     <span class="dots">...</span>
@@ -34,7 +34,7 @@
                     <a href="?page={{ num }}" class="{% if num == page_obj.number %}current{% endif %}">{{ num }}</a>
                 {% endif %}
             {% endfor %}
-    
+
             {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}">Next</a>
                 <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
@@ -44,9 +44,8 @@
             {% endif %}
         </span>
     </div>
-    
-    
 {% endblock %}
+
 
 
 
