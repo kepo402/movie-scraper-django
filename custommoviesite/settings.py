@@ -24,19 +24,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-owp@-9e4dt_s$_*@53t9(ii!*a&hu2yq(9db43a6oo8=4-tx&2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1', 
     'yinmovie.vercel.app',
-    'yinmovie-nvxij5qe3-olayinkas-projects-8dfff35b.vercel.app',
+    'd68a-102-88-34-32.ngrok-free.app',
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://yinmovie.vercel.app',
-    'https://yinmovie-nvxij5qe3-olayinkas-projects-8dfff35b.vercel.app',
+    'https://d68a-102-88-34-32.ngrok-free.app',
 ]
 
 
