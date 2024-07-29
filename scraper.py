@@ -40,7 +40,7 @@ def get_lulacloud_download_link(awafim_url):
         print(f"Error occurred: {e}")
         return None
 
-def scrape_movie_details(detail_url):
+def scrape_movie_details(detail_url, fallback_title=None):
     response = requests.get(detail_url)
     if response.status_code != 200:
         print(f"Failed to retrieve the movie detail page. Status code: {response.status_code}")
@@ -48,7 +48,10 @@ def scrape_movie_details(detail_url):
 
     detail_soup = BeautifulSoup(response.text, 'html.parser')
 
+    # Use fallback title if available, otherwise search for the title in the page
     title_tag = detail_soup.find('h1', id='page-h1')
+    title = fallback_title if fallback_title else (title_tag.get_text(strip=True) if title_tag else "Unknown Title")
+    
     img_tag = detail_soup.find('img', class_='poster') or detail_soup.find('div', class_='te-thumb').find('img')
     plot_tag = detail_soup.find('p', class_='tei-plot')
 
@@ -75,7 +78,6 @@ def scrape_movie_details(detail_url):
         elif name == 'Genre':
             genre = value
 
-    title = title_tag.get_text(strip=True) if title_tag else "Unknown Title"
     img_src = img_tag['src'] if img_tag else None
     plot = plot_tag.get_text(strip=True) if plot_tag else "Plot not available"
 
@@ -125,13 +127,26 @@ def scrape_page(page_url, content_type):
             detail_url = f"https://www.awafim.tv{link}"
         else:
             detail_url = link
+
+        img_tag = article_tag.find('img', class_='to-thumb')
+        img_src = img_tag['src'] if img_tag else None
+        
+        # Extract title and run info from the article tag
+        title_tag = article_tag.find('h3', class_='to-h3')
+        run_info_tag = article_tag.find('div', class_='toi-run')
+        
+        title = title_tag.get_text(strip=True) if title_tag else "Unknown Title"
+        run_info = run_info_tag.get_text(strip=True) if run_info_tag else ""
+        full_title = f"{title} {run_info}".strip()
+
         print(f"Fetching details for: {detail_url}")
 
-        movie_details = scrape_movie_details(detail_url)
+        # Pass the extracted title as a fallback title to scrape_movie_details
+        movie_details = scrape_movie_details(detail_url, full_title)
         if movie_details:
+            movie_details['img_src'] = img_src  # Update image source if needed
             lulacloud_link = get_lulacloud_download_link(detail_url)
             movie_details['link'] = lulacloud_link
-
             movie_details['type'] = content_type
             content_items.append(movie_details)
 
@@ -189,7 +204,7 @@ def save_content_to_db(content_items):
 
 if __name__ == "__main__":
     urls = [
-        ("https://www.awafim.tv/browse/page/1?type=movie&country%5B0%5D=NGA", 'nollywood'),
+        ("https://www.awafim.tv/browse/page/102?type=series", 'series'),
     ]
 
     all_items = []
@@ -198,4 +213,6 @@ if __name__ == "__main__":
         all_items.extend(items)
 
     save_content_to_db(all_items)
+
+
 
