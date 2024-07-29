@@ -29,7 +29,6 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1', 
-    'movie-scraper-django.onrender.com',
     'yinmovie.vercel.app',
     'yinmovie-nvxij5qe3-olayinkas-projects-8dfff35b.vercel.app',
 
