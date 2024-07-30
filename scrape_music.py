@@ -111,31 +111,131 @@ def scrape_content(start_url, content_type):
     return all_content_items
 
 def save_content_to_db(content_items):
+    saved_count = 0
+    skipped_count = 0
+
     for item in content_items:
-        content, created = Content.objects.update_or_create(
-            title=item['title'],
-            defaults={
-                'permanent_download_link': item['download_link'],
-                'poster_url': item['img_src'],
-                'type': item['type'],
-                'details': f"Title: {item['title']}",
-            }
-        )
-        content.update_download_link()
-    print(f"Saved {len(content_items)} items to database.")
+        if item['download_link'] is None:
+            print(f"Skipping item due to missing download link: {item['title']}")
+            skipped_count += 1
+            continue
+
+        # Handle cases where multiple objects might exist with the same title
+        content = Content.objects.filter(title=item['title'])
+        
+        if content.exists():
+            # If there are multiple or one, update the first found
+            for obj in content:
+                obj.permanent_download_link = item['download_link']
+                obj.poster_url = item['img_src']
+                obj.type = item['type']
+                obj.details = f"Title: {item['title']}"
+                obj.save()
+            print(f"Updated existing content: {item['title']}")
+        else:
+            # Create a new entry if none exists
+            Content.objects.create(
+                title=item['title'],
+                permanent_download_link=item['download_link'],
+                poster_url=item['img_src'],
+                type=item['type'],
+                details=f"Title: {item['title']}",
+            )
+            print(f"Created new content: {item['title']}")
+        
+        saved_count += 1
+
+    print(f"Saved {saved_count} items to database.")
+    print(f"Skipped {skipped_count} items due to missing download links.")
 
 if __name__ == "__main__":
     # Define URLs for scraping music
     music_urls = [
-        ("https://www.val9ja.com.ng/music/page/16/", 'music'),
-        ("https://www.val9ja.com.ng/music/page/16/", 'music'),
-        ("https://www.val9ja.com.ng/music/page/16/", 'music'),
-        ("https://www.val9ja.com.ng/music/page/16/", 'music'),
-        ("https://www.val9ja.com.ng/music/page/16/", 'music'),
-        ("https://www.val9ja.com.ng/music/page/16/", 'music'),
-        ("https://www.val9ja.com.ng/music/page/16/", 'music'),
-        ("https://www.val9ja.com.ng/music/page/16/", 'music'),
-       
+        ("https://www.val9ja.com.ng/music/page/33/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/34/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/35/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/36/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/37/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/38/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/39/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/40/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/41/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/42/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/43/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/44/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/45/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/46/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/47/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/48/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/49/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/50/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/51/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/52/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/53/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/54/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/55/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/56/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/57/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/58/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/59/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/60/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/61/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/62/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/63/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/64/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/65/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/66/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/67/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/68/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/69/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/70/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/71/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/72/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/73/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/74/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/75/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/76/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/77/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/78/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/79/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/80/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/81/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/82/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/83/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/84/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/85/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/86/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/87/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/88/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/89/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/90/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/91/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/92/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/93/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/94/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/95/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/96/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/97/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/98/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/99/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/100/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/101/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/102/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/103/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/104/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/105/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/106/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/107/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/108/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/109/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/110/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/111/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/112/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/113/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/114/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/115/", 'music'),
+        ("https://www.val9ja.com.ng/music/page/116/", 'music'),
+
     ]
 
     all_items = []
@@ -147,5 +247,7 @@ if __name__ == "__main__":
 
     # Save all content items to database
     save_content_to_db(all_items)
+
+
 
 

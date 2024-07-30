@@ -12,7 +12,7 @@ from django.shortcuts import render
 from .models import Content  # Adjust the import based on your app's structure
 
 def content_list(request, content_type):
-    contents = Content.objects.filter(type=content_type).order_by('date_added')
+    contents = Content.objects.filter(type=content_type).order_by('-date_added')
     paginator = Paginator(contents, 12)  # Show 12 contents per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
