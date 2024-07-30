@@ -92,32 +92,20 @@ def home(request):
 def download_content(request, content_id):
     content = get_object_or_404(Content, id=content_id)
 
-    # Update to temporary download link
-    new_download_link = content.update_download_link()
-
-    if new_download_link:
-        return HttpResponseRedirect(new_download_link)
+    if content.type == 'music':
+        # Directly redirect to the permanent music file link
+        return redirect(content.permanent_download_link)
     else:
-        return HttpResponseRedirect('/error-page')  # Redirect to an error page or a different page
-    
+        new_download_link = content.update_download_link()
+        if new_download_link:
+            return HttpResponseRedirect(new_download_link)
+        else:
+            return HttpResponseRedirect('/error-page')  # Redirect to an error page or a different page
 
 def finalize_download(request, content_id):
     content = get_object_or_404(Content, id=content_id)
-
-    # Revert to the permanent link after download attempt
-    content.revert_to_permanent_link()
+    
+    if content.type != 'music':
+        content.revert_to_permanent_link()
     
     return HttpResponseRedirect('/thank-you')  # Redirect to a thank-you page or elsewhere
-
-
-def finalize_download(request, content_id):
-    content = get_object_or_404(Content, id=content_id)
-
-    # Revert to the permanent link after download attempt or as needed
-    content.revert_to_permanent_link()
-    
-    # Redirect to a thank-you page or elsewhere
-    return HttpResponseRedirect('/thank-you')
-
-
-

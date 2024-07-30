@@ -37,67 +37,77 @@ def get_lulacloud_download_link(awafim_url):
 
     except Exception as e:
         driver.quit()
-        print(f"Error occurred: {e}")
+        print(f"Error occurred while getting LulaCloud link: {e}")
         return None
 
-def scrape_movie_details(detail_url, fallback_title=None):
-    response = requests.get(detail_url)
-    if response.status_code != 200:
-        print(f"Failed to retrieve the movie detail page. Status code: {response.status_code}")
+def scrape_movie_details(detail_url, content_type, fallback_title=None):
+    try:
+        response = requests.get(detail_url)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Failed to retrieve the movie detail page. Error: {e}")
         return None
 
     detail_soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Use fallback title if available, otherwise search for the title in the page
-    title_tag = detail_soup.find('h1', id='page-h1')
-    title = fallback_title if fallback_title else (title_tag.get_text(strip=True) if title_tag else "Unknown Title")
-    
-    img_tag = detail_soup.find('img', class_='poster') or detail_soup.find('div', class_='te-thumb').find('img')
-    plot_tag = detail_soup.find('p', class_='tei-plot')
+    try:
+        # Use fallback title if available, otherwise search for the title in the page
+        if content_type == 'series':
+            title_tag = detail_soup.find('h1', id='page-h1')
+            title = fallback_title if fallback_title else (title_tag.get_text(strip=True) if title_tag else "Unknown Title")
+        else:
+            title_tag = detail_soup.find('div', id='page-h1-con').find('h1', id='page-h1')
+            title = title_tag.get_text(strip=True) if title_tag else fallback_title if fallback_title else "Unknown Title"
 
-    release_date = "Release date not available"
-    country = "Country not available"
-    language = "Language not available"
-    genre = "Genre not available"
+        img_tag = detail_soup.find('img', class_='poster') or detail_soup.find('div', class_='te-thumb').find('img')
+        plot_tag = detail_soup.find('p', class_='tei-plot')
 
-    for li in detail_soup.select('.tei-list > li'):
-        name_tag = li.find('div', class_='tei-name')
-        value_tag = li.find('div', class_='tei-value')
-        if not name_tag or not value_tag:
-            continue
-        
-        name = name_tag.get_text(strip=True)
-        value = value_tag.get_text(strip=True)
-        
-        if name == 'Release Date':
-            release_date = value
-        elif name == 'Country':
-            country = value
-        elif name == 'Language':
-            language = value
-        elif name == 'Genre':
-            genre = value
+        release_date = "Release date not available"
+        country = "Country not available"
+        language = "Language not available"
+        genre = "Genre not available"
 
-    img_src = img_tag['src'] if img_tag else None
-    plot = plot_tag.get_text(strip=True) if plot_tag else "Plot not available"
+        for li in detail_soup.select('.tei-list > li'):
+            name_tag = li.find('div', class_='tei-name')
+            value_tag = li.find('div', class_='tei-value')
+            if not name_tag or not value_tag:
+                continue
 
-    print(f"Scraped details for {title}:")
-    print(f"  Image Source: {img_src}")
-    print(f"  Plot: {plot}")
-    print(f"  Release Date: {release_date}")
-    print(f"  Country: {country}")
-    print(f"  Language: {language}")
-    print(f"  Genre: {genre}")
+            name = name_tag.get_text(strip=True)
+            value = value_tag.get_text(strip=True)
 
-    return {
-        'title': title,
-        'img_src': img_src,
-        'plot': plot,
-        'release_date': release_date,
-        'country': country,
-        'language': language,
-        'genre': genre
-    }
+            if name == 'Release Date':
+                release_date = value
+            elif name == 'Country':
+                country = value
+            elif name == 'Language':
+                language = value
+            elif name == 'Genre':
+                genre = value
+
+        img_src = img_tag['src'] if img_tag else None
+        plot = plot_tag.get_text(strip=True) if plot_tag else "Plot not available"
+
+        print(f"Scraped details for {title}:")
+        print(f"  Image Source: {img_src}")
+        print(f"  Plot: {plot}")
+        print(f"  Release Date: {release_date}")
+        print(f"  Country: {country}")
+        print(f"  Language: {language}")
+        print(f"  Genre: {genre}")
+
+        return {
+            'title': title,
+            'img_src': img_src,
+            'plot': plot,
+            'release_date': release_date,
+            'country': country,
+            'language': language,
+            'genre': genre
+        }
+    except Exception as e:
+        print(f"Error occurred while scraping movie details: {e}")
+        return None
 
 def get_next_page_url(soup):
     next_page_link = soup.select_one('ul.pagination li a[rel="next"]')
@@ -112,43 +122,50 @@ def scrape_page(page_url, content_type):
     print(f"Fetching URL: {page_url}")
     content_items = []
 
-    response = requests.get(page_url)
-    if response.status_code != 200:
-        print(f"Failed to retrieve the page. Status code: {response.status_code}")
+    try:
+        response = requests.get(page_url)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Failed to retrieve the page. Error: {e}")
         return content_items
 
     soup = BeautifulSoup(response.text, 'html.parser')
     print(f"Fetched URL: {page_url}")
 
     for article_tag in soup.select('article.titles-one'):
-        link_tag = article_tag.find('a')
-        link = link_tag.get('href')
-        if not link.startswith('http'):
-            detail_url = f"https://www.awafim.tv{link}"
-        else:
-            detail_url = link
+        try:
+            link_tag = article_tag.find('a')
+            link = link_tag.get('href')
+            if not link.startswith('http'):
+                detail_url = f"https://www.awafim.tv{link}"
+            else:
+                detail_url = link
 
-        img_tag = article_tag.find('img', class_='to-thumb')
-        img_src = img_tag['src'] if img_tag else None
-        
-        # Extract title and run info from the article tag
-        title_tag = article_tag.find('h3', class_='to-h3')
-        run_info_tag = article_tag.find('div', class_='toi-run')
-        
-        title = title_tag.get_text(strip=True) if title_tag else "Unknown Title"
-        run_info = run_info_tag.get_text(strip=True) if run_info_tag else ""
-        full_title = f"{title} {run_info}".strip()
+            img_tag = article_tag.find('img', class_='to-thumb')
+            img_src = img_tag['src'] if img_tag else None
 
-        print(f"Fetching details for: {detail_url}")
+            title_tag = article_tag.find('h3', class_='to-h3')
+            title = title_tag.get_text(strip=True) if title_tag else "Unknown Title"
 
-        # Pass the extracted title as a fallback title to scrape_movie_details
-        movie_details = scrape_movie_details(detail_url, full_title)
-        if movie_details:
-            movie_details['img_src'] = img_src  # Update image source if needed
-            lulacloud_link = get_lulacloud_download_link(detail_url)
-            movie_details['link'] = lulacloud_link
-            movie_details['type'] = content_type
-            content_items.append(movie_details)
+            if content_type == 'series':
+                run_info_tag = article_tag.find('div', class_='toi-run')
+                run_info = run_info_tag.get_text(strip=True) if run_info_tag else ""
+                full_title = f"{title} {run_info}".strip()
+            else:
+                full_title = title
+
+            print(f"Fetching details for: {detail_url}")
+
+            # Pass the extracted title as a fallback title to scrape_movie_details
+            movie_details = scrape_movie_details(detail_url, content_type, full_title)
+            if movie_details:
+                movie_details['img_src'] = img_src  # Update image source if needed
+                lulacloud_link = get_lulacloud_download_link(detail_url)
+                movie_details['link'] = lulacloud_link
+                movie_details['type'] = content_type
+                content_items.append(movie_details)
+        except Exception as e:
+            print(f"Error occurred while processing article: {e}")
 
     print(f"Scraped {len(content_items)} items from {page_url}")
     return content_items
@@ -165,9 +182,11 @@ def scrape_content(start_url, content_type):
         visited_urls.add(current_url)
         page_urls.append(current_url)
 
-        response = requests.get(current_url)
-        if response.status_code != 200:
-            print(f"Failed to retrieve the page. Status code: {response.status_code}")
+        try:
+            response = requests.get(current_url)
+            response.raise_for_status()
+        except requests.RequestException as e:
+            print(f"Failed to retrieve the page. Error: {e}")
             break
 
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -183,28 +202,35 @@ def scrape_content(start_url, content_type):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [executor.submit(scrape_page, url, content_type) for url in page_urls]
         for future in concurrent.futures.as_completed(futures):
-            all_content_items.extend(future.result())
+            try:
+                all_content_items.extend(future.result())
+            except Exception as e:
+                print(f"Error occurred while scraping page: {e}")
 
     print(f"Scraped {len(all_content_items)} items from {start_url}")
     return all_content_items
 
 def save_content_to_db(content_items):
     for item in content_items:
-        content, created = Content.objects.update_or_create(
-            title=item['title'],
-            defaults={
-                'permanent_download_link': item['link'],
-                'poster_url': item['img_src'],
-                'type': item['type'],
-                'details': f"Plot: {item['plot']}\nRelease Date: {item['release_date']}\nCountry: {item['country']}",
-            }
-        )
-        content.update_download_link()
+        try:
+            content, created = Content.objects.update_or_create(
+                title=item['title'],
+                defaults={
+                    'permanent_download_link': item['link'],
+                    'poster_url': item['img_src'],
+                    'type': item['type'],
+                    'details': f"Plot: {item['plot']}\nRelease Date: {item['release_date']}\nCountry: {item['country']}",
+                }
+            )
+            content.update_download_link()
+        except Exception as e:
+            print(f"Error occurred while saving to database: {e}")
     print(f"Saved {len(content_items)} items to database.")
 
 if __name__ == "__main__":
     urls = [
-        ("https://www.awafim.tv/browse?q=&type=movie&country%5B%5D=NGA", 'nollywood'),
+        ("https://www.awafim.tv/browse?type=movie", 'movie'),
+
     ]
 
     all_items = []
@@ -213,6 +239,3 @@ if __name__ == "__main__":
         all_items.extend(items)
 
     save_content_to_db(all_items)
-
-
-
