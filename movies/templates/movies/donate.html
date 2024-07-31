@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Donate{% endblock %}
+
+{% block content %}
+<div class="donate">
+    <h1>Donate</h1>
+    <p>Your support helps us keep providing valuable content. Please use the form below to make a donation.</p>
+
+    <form id="donation-form" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="amount">Amount (NGN):</label>
+            <input type="number" id="amount" name="amount" min="100" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <button type="button" onclick="payWithPaystack()">Donate</button>
+    </form>
+</div>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+    function payWithPaystack() {
+        var amount = document.getElementById('amount').value;
+        var email = document.getElementById('email').value;
+
+        if (!amount || !email) {
+            alert('Please enter both amount and email.');
+            return;
+        }
+
+        var handler = PaystackPop.setup({
+            key: 'pk_live_00af550ee635a7801b74bfba6bdadf8ee3501da6',
+            email: email,
+            amount: amount * 100, // Amount in kobo
+            currency: 'NGN',
+            callback: function(response) {
+                // Handle the response here
+                alert('Thank you for your donation! Payment reference: ' + response.reference);
+                // Redirect to home page after successful payment
+                window.location.href = "{% url 'movies:movie_list' %}";
+            },
+            onClose: function() {
+                alert('Transaction was not completed.');
+            }
+        });
+        handler.openIframe();
+    }
+</script>
+{% endblock %}
+
+
+

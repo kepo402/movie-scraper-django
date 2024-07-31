@@ -22,10 +22,10 @@
         <span class="step-links">
             {% if page_obj.has_previous %}
                 <a href="?page=1">&laquo; First</a>
-                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
             {% else %}
                 <span class="disabled">&laquo; First</span>
-                <span class="disabled">Previous</span>
+                <span class="disabled">Prev</span>
             {% endif %}
 
             {% for num in pages_to_show %}
@@ -49,7 +49,7 @@
     <!-- Additional Sections -->
     <div class="advertisement">
         <p>Advertise with us! Contact us for more information.</p>
-        <a href="#">Click here for more details</a>
+        <a href="{% url 'movies:advertise' %}">Click here for more details</a>
     </div>
 
     <div class="ysense-referral">

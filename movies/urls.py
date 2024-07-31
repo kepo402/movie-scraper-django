@@ -14,4 +14,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('contact-us/', views.contact_us, name='contact_us'),
+    path('advertise/', views.advertise_with_us, name='advertise'),
+    path('donate/', views.donate, name='donate'),  # URL pattern for donate
 ]

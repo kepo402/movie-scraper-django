@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from .models import Content, Review
 from .forms import ReviewForm
 from django.http import HttpResponseRedirect
+from django.views.decorators.http import require_http_methods
 
 def home_redirect(request):
     return redirect('content_list', content_type='movie')
@@ -88,6 +89,9 @@ def contact_us(request):
 def home(request):
     return redirect('content_list', content_type='movie')
 
+def advertise_with_us(request):
+    return render(request, 'movies/advertise.html')
+
 
 def download_content(request, content_id):
     content = get_object_or_404(Content, id=content_id)
@@ -109,3 +113,16 @@ def finalize_download(request, content_id):
         content.revert_to_permanent_link()
     
     return HttpResponseRedirect('/thank-you')  # Redirect to a thank-you page or elsewhere
+
+@require_http_methods(["GET", "POST"])
+def donate(request):
+    if request.method == "POST":
+        amount = request.POST.get('amount')
+        email = request.POST.get('email')
+        
+        # You could save this information to a database or process it as needed
+        
+        return render(request, 'movies/donate.html', {'amount': amount, 'email': email})
+    
+    # Handle GET request
+    return render(request, 'movies/donate.html')
