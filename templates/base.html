@@ -345,7 +345,7 @@
             border: 1px solid #333;
             border-radius: 10px;
             padding: 10px;
-            margin: 20px 0;
+            margin-top: 50px;
             text-align: center;
             color: #ff9800;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -374,6 +374,7 @@
             padding: 40px 20px;
             padding-top: 100px;
             flex: 1;
+            margin-top: 0px;
         }
 
         footer {
@@ -463,10 +464,11 @@
         }
 
         .content-poster {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
+    width: 100%;
+    height: 300px; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures the image covers the container area without distortion */
+    border-radius: 10px;
+}
 
         .content-item h2 {
             font-size: 1.2em;
@@ -507,6 +509,13 @@
             </ul>
         </nav>
     </header>
+    <div class="ysense-referral">
+        <a href="https://www.ysense.com/?rb=128255493" target="_blank" class="ysense-link">
+            <p>Check out this great offer from Ysense!</p>
+            <img src="{% static 'images/ysense.jpeg' %}" alt="Ysense Referral">
+        </a>
+    </div>
+    
 
     <main>
         {% block content %}
@@ -553,5 +562,6 @@
     {% endblock %}
 </body>
 </html>
+
 
 

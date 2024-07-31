@@ -229,7 +229,7 @@ def save_content_to_db(content_items):
 
 if __name__ == "__main__":
     urls = [
-        ("https://www.awafim.tv/browse?type=movie", 'movie'),
+        ("https://www.awafim.tv/browse/page/102?type=series", 'series'),
 
     ]
 

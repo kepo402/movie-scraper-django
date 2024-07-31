@@ -4,6 +4,7 @@
 {% block title %}{{ content_type|title }} List{% endblock %}
 
 {% block content %}
+    
     <h1>{{ content_type|title }} List</h1>
     <div class="content-grid">
         {% for content in page_obj %}
@@ -46,21 +47,12 @@
         </span>
     </div>
 
-    <!-- Additional Sections -->
     <div class="advertisement">
         <p>Advertise with us! Contact us for more information.</p>
         <a href="{% url 'movies:advertise' %}">Click here for more details</a>
     </div>
-
-    <div class="ysense-referral">
-        <a href="https://www.ysense.com/?rb=128255493" target="_blank" class="ysense-link">
-            <p>Check out this great offer from Ysense!</p>
-            <img src="{% static 'images/ysense.jpeg' %}" alt="Ysense Referral">
-            
-        </a>
-    </div>
-    
 {% endblock %}
+
 
 
 
