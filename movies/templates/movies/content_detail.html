@@ -6,7 +6,7 @@
 {% block content %}
     <h1>{{ content.title }}</h1>
     {% if content.poster_url %}
-        <img src="{{ content.poster_url }}" alt="{{ content.title }}" style="max-width: 100%; height: 500px;">
+        <img src="{{ content.poster_url }}" alt="{{ content.title }}" style="max-width:80%; height: 500px;">
     {% endif %}
     <p>{{ content.details }}</p>
     <button class="download-button" onclick="window.location.href='{% url 'movies:download_content' content_id=content.id %}'">
