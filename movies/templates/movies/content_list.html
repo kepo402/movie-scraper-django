@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ content_type|title }} List{% endblock %}
 
@@ -44,6 +45,21 @@
             {% endif %}
         </span>
     </div>
+
+    <!-- Additional Sections -->
+    <div class="advertisement">
+        <p>Advertise with us! Contact us for more information.</p>
+        <a href="#">Click here for more details</a>
+    </div>
+
+    <div class="ysense-referral">
+        <a href="https://www.ysense.com/?r=123456" target="_blank" class="ysense-link">
+            <p>Check out this great offer from Ysense!</p>
+            <img src="{% static 'images/ysense.jpeg' %}" alt="Ysense Referral">
+            
+        </a>
+    </div>
+    
 {% endblock %}
 
 

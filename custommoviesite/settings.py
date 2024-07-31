@@ -30,13 +30,13 @@ ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1', 
     'yinmovie.vercel.app',
-    '2ec3-102-88-34-32.ngrok-free.app',
+    '6290-102-89-23-51.ngrok-free.app',
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://yinmovie.vercel.app',
-    'https://2ec3-102-88-34-32.ngrok-free.app',
+    'https://6290-102-89-23-51.ngrok-free.app',
 ]
 
 
