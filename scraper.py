@@ -51,7 +51,6 @@ def scrape_movie_details(detail_url, content_type, fallback_title=None):
     detail_soup = BeautifulSoup(response.text, 'html.parser')
 
     try:
-        # Use fallback title if available, otherwise search for the title in the page
         if content_type == 'series':
             title_tag = detail_soup.find('h1', id='page-h1')
             title = fallback_title if fallback_title else (title_tag.get_text(strip=True) if title_tag else "Unknown Title")
@@ -156,7 +155,6 @@ def scrape_page(page_url, content_type):
 
             print(f"Fetching details for: {detail_url}")
 
-            # Pass the extracted title as a fallback title to scrape_movie_details
             movie_details = scrape_movie_details(detail_url, content_type, full_title)
             if movie_details:
                 movie_details['img_src'] = img_src  # Update image source if needed
@@ -213,25 +211,33 @@ def scrape_content(start_url, content_type):
 def save_content_to_db(content_items):
     for item in content_items:
         try:
-            content, created = Content.objects.update_or_create(
-                title=item['title'],
-                defaults={
-                    'permanent_download_link': item['link'],
-                    'poster_url': item['img_src'],
-                    'type': item['type'],
-                    'details': f"Plot: {item['plot']}\nRelease Date: {item['release_date']}\nCountry: {item['country']}",
-                }
-            )
-            content.update_download_link()
+            is_nollywood = 'NGA' in item['country']
+            movie_types = set([item['type']])
+            
+            if item['type'] == 'movie' and is_nollywood:
+                movie_types.add('nollywood')
+
+            for movie_type in movie_types:
+                Content.objects.update_or_create(
+                    title=item['title'],
+                    type=movie_type,
+                    defaults={
+                        'permanent_download_link': item['link'],
+                        'poster_url': item['img_src'],
+                        'details': f"Plot: {item['plot']}\nRelease Date: {item['release_date']}\nCountry: {item['country']}",
+                    }
+                )
         except Exception as e:
             print(f"Error occurred while saving to database: {e}")
     print(f"Saved {len(content_items)} items to database.")
 
 if __name__ == "__main__":
     urls = [
-        ("https://www.awafim.tv/browse/page/102?type=series", 'series'),
+("https://www.awafim.tv/browse/page/4?type=movie", 'movie'),
+
 
     ]
+    
 
     all_items = []
     for url, content_type in urls:
@@ -239,3 +245,5 @@ if __name__ == "__main__":
         all_items.extend(items)
 
     save_content_to_db(all_items)
+
+
