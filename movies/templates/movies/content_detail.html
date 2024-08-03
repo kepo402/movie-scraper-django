@@ -68,6 +68,20 @@
             <button type="submit" class="submit-review-button">Submit Review</button>
         </form>
     </div>
+
+    <!-- Donation Section -->
+    <div class="donation-section">
+        <h2>Support Our Website</h2>
+        <p>
+            We strive to provide the best content without the interruption of ads. To keep this website running and to continue delivering high-quality content, we need your support. Any donation, even as little as $0.10, will help us maintain and improve our services.
+        </p>
+        <p>
+            Without your support, we may not be able to continue offering content in the way we want. Please consider donating to help us sustain this platform.
+        </p>
+        <button class="donate-button" onclick="window.location.href='{% url 'movies:donate' %}'">
+            Donate Now
+        </button>
+    </div>
 {% endblock %}
 
 {% block extra_styles %}
@@ -163,7 +177,26 @@
     .share-icon:hover {
         background-color: #0056b3;
     }
+    .donation-section {
+        margin-top: 40px;
+        text-align: center;
+    }
+    .donate-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #dc3545;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+    .donate-button:hover {
+        background-color: #c82333;
+    }
 </style>
 {% endblock %}
+
 
 
