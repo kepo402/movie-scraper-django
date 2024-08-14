@@ -29,13 +29,13 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1', 
-    'yinmovie.vercel.app',
+    'waploaded.vercel.app',
     'a719-102-89-23-51.ngrok-free.app',
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://yinmovie.vercel.app',
+    'https://waploaded.vercel.app',
     'https://a719-102-89-23-51.ngrok-free.app',
 ]
 
