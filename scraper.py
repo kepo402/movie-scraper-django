@@ -234,8 +234,8 @@ def save_content_to_db(content_items):
 if __name__ == "__main__":
     urls = [
 # ("https://www.awafim.tv/browse/page/57?type=series", 'series'),
-# ("https://www.awafim.tv/browse/page/247?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/1?type=series", 'series'),
+# ("https://www.awafim.tv/browse/page/242?type=movie", 'movie'),
+("https://www.awafim.tv/browse/page/1?type=movie", 'movie'),
 
 
 
