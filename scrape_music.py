@@ -178,7 +178,7 @@ def save_content_to_db(content_items):
 if __name__ == "__main__":
     # Define URLs for scraping music
     music_urls = [
-         ("https://www.val9ja.com.ng/music/", 'music'),
+         ("https://www.val9ja.com.ng/music/page/1/", 'music'),
 
 
     ]

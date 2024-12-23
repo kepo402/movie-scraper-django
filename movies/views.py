@@ -4,6 +4,10 @@ from .models import Content, Review
 from .forms import ReviewForm
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
+import requests
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 def home_redirect(request):
     return redirect('content_list', content_type='movie')
@@ -114,15 +118,5 @@ def finalize_download(request, content_id):
     
     return HttpResponseRedirect('/thank-you')  # Redirect to a thank-you page or elsewhere
 
-@require_http_methods(["GET", "POST"])
 def donate(request):
-    if request.method == "POST":
-        amount = request.POST.get('amount')
-        email = request.POST.get('email')
-        
-        # You could save this information to a database or process it as needed
-        
-        return render(request, 'movies/donate.html', {'amount': amount, 'email': email})
-    
-    # Handle GET request
     return render(request, 'movies/donate.html')
