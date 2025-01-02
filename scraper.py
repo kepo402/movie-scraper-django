@@ -238,10 +238,10 @@ if __name__ == "__main__":
 #  ("https://www.awafim.tv/browse?q=&type=movie&country%5B%5D=NGA", 'nollywood')
 
 ("https://www.awafim.tv/browse/page/231?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/232?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/232?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/232?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/232?type=movie", 'movie'),
+("https://www.awafim.tv/browse/page/4?type=movie", 'movie'),
+("https://www.awafim.tv/browse/page/3?type=movie", 'movie'),
+("https://www.awafim.tv/browse/page/2?type=movie", 'movie'),
+("https://www.awafim.tv/browse/page/1?type=movie", 'movie'),
 
 
 
