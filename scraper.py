@@ -233,15 +233,15 @@ def save_content_to_db(content_items):
 
 if __name__ == "__main__":
     urls = [
-# ("https://www.awafim.tv/browse/page/55?type=series", 'series'),
+# ("https://www.awafim.tv/browse/page/54?type=series", 'series'),
 # ("https://www.awafim.tv/browse/page/231?type=movie", 'movie'),
 #  ("https://www.awafim.tv/browse?q=&type=movie&country%5B%5D=NGA", 'nollywood')
 
-("https://www.awafim.tv/browse/page/231?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/4?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/3?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/2?type=movie", 'movie'),
-("https://www.awafim.tv/browse/page/1?type=movie", 'movie'),
+("https://www.awafim.tv/browse/page/56?type=series", 'series'),
+("https://www.awafim.tv/browse/page/55?type=series", 'series'),
+("https://www.awafim.tv/browse/page/3?type=series", 'series'),
+("https://www.awafim.tv/browse/page/2?type=series", 'series'),
+("https://www.awafim.tv/browse/page/1?type=series", 'series'),
 
 
 
